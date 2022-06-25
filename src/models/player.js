@@ -1,9 +1,12 @@
 let mongoose = require('mongoose');
+let Quest = require('./schemas/questSchema');
+let Race = require('./schemas/raceSchema');
+let Skill = require('./schemas/skillSchema');
 
 let characterSchema = new mongoose.Schema({
-    userId: {
+    userId :{
         type: String,
-        required: true
+        require: true
     },
     name: String,
     level: Number,
@@ -15,7 +18,12 @@ let characterSchema = new mongoose.Schema({
     charisma:Number,
     xp:Number,
     hp:Number,
-    mp:Number
+    mp:Number,
+    qp:Number,
+    finishedQuests: [Quest],
+    currentQuests: [Quest],
+    race: Race,
+    skills: [Skill]
 });
 
 module.exports = mongoose.model('Character', characterSchema);

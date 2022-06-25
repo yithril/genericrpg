@@ -1,7 +1,13 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+
+//Routes
 const pc_routes = require('./src/routes/playerCharacterRoute');
+const skill_routes = require('./src/routes/skillRoute');
+const quest_routes = require('./src/routes/questRoute');
+
+
 const mongoose = require('mongoose');
 const bParser = require('body-parser');
 const bodyParser = require('body-parser');
@@ -34,6 +40,8 @@ app.use(function(err, req, res, next){
 });
 
 app.use('/api/playerCharacters', pc_routes);
+app.use('/api/Skills', skill_routes);
+app.use('/api/Quests', quest_routes);
 
 app.listen(3010);
 console.log('Listening on http://localhost:3010');
