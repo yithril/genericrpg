@@ -1,6 +1,26 @@
 const mongoose = require('mongoose');
 const Character = require('../models/player');
 
+const getPlayercharacterByUserId = (req, res) => {
+    const userId = req.params.id;
+
+    Character.findOne({userId: userId})
+        .then((pc) => {
+            return res.status(200).json({
+                success: true,
+                message: 'Found pc',
+                PC: pc
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                success: false,
+                message: 'Server error. Please try again.',
+                error: err.message,
+              });
+        });
+}
+
 const getPlayerCharacters = (req, res) => {
     Character.find()
     .then((allPC) => {
@@ -114,5 +134,6 @@ module.exports = {
     getPlayerCharacter,
     createPlayerCharacter,
     updatePlayerCharacter,
-    deletePlayerCharacter
+    deletePlayerCharacter,
+    getPlayercharacterByUserId
 }

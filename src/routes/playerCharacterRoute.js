@@ -11,7 +11,8 @@ const {
     getPlayerCharacter,
     createPlayerCharacter,
     updatePlayerCharacter,
-    deletePlayerCharacter
+    deletePlayerCharacter,
+    getPlayercharacterByUserId
 } = require('../controllers/playerCharacterController');
 
 router.route('/').get([checkJwt], getPlayerCharacters);
@@ -23,5 +24,7 @@ router.route('/').post([checkJwt], createPlayerCharacter);
 router.route('/:id').put([checkJwt], updatePlayerCharacter);
 
 router.route('/:id').delete([checkJwt], deletePlayerCharacter);
+
+router.route('/getByUserId/:id').get([checkJwt], getPlayercharacterByUserId)
 
 module.exports = router;
