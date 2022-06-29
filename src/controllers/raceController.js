@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
-const Skill = require('../models/skill');
+const Race = require('../models/Race');
 
-const getSkills = (req, res) => {
-    Skill.find()
+const getRaces = (req, res) => {
+    Race.find()
     .then((allPC) => {
         return res.status(200).json({
             success: true,
-            message: 'A list of all skills',
-            Skill: allPC,
+            message: 'A list of all Races',
+            Race: allPC,
           });
     })
     .catch((err) => {
@@ -19,15 +19,15 @@ const getSkills = (req, res) => {
       });
 };
 
-const getSkill = (req, res) => {
+const getRace = (req, res) => {
     const id = req.params.id;
 
-    Skill.findById(id)
-    .then((singleSkill) => {
+    Race.findById(id)
+    .then((singleRace) => {
         res.status(200).json({
             success: true,
             message: `Found skll`,
-            Skill: singleSkill,
+            Race: singleRace,
           });
     })
     .catch((err) => {
@@ -39,23 +39,25 @@ const getSkill = (req, res) => {
     });
 };
 
-const createSkill = (req, res) => {
+const createRace = (req, res) => {
 
-   const skill = new Skill({
+   const race = new Race({
     _id: mongoose.Types.ObjectId(),
-        name: req.body.name,
-        description: req.body.description,
-        isTrainable: req.body.isTrainable,
-        currentLevel: req.body.currentLevel
+    name: req.body.name,
+    isPlayable: req.body.isPlayable,
+    isPremium: req.body.isPremium,
+    description: req.body.description,
+    shortDescription: req.body.shortDescription,
+    limbs: req.body.limbs
    });
 
-   return skill
+   return race
    .save()
-   .then((newSkill) =>{
+   .then((newRace) =>{
     return res.status(201).json({
         success:true,
         message: 'Created successfully',
-        Skill: newSkill
+        Race: newRace
     })
    })
    .catch((error) => {
@@ -67,17 +69,17 @@ const createSkill = (req, res) => {
    });
 };
 
-const updateSkill= (req, res) => {
+const updateRace= (req, res) => {
     const id = req.params.id;
 
     const updateObject = req.body;
 
-    Skill.update({_id:id}, {$set:updateObject})
+    Race.update({_id:id}, {$set:updateObject})
     .exec()
     .then(() => {
         res.status(200).json({
             success: true,
-            message: 'Skill is updated',
+            message: 'Race is updated',
             updateCause: updateObject,
           });
     })
@@ -89,9 +91,9 @@ const updateSkill= (req, res) => {
     });
 };
 
-const deleteSkill = (req, res) => {
+const deleteRace = (req, res) => {
     const id = req.params.id;
-    Skill.findByIdAndRemove(id)
+    Race.findByIdAndRemove(id)
     .exec()
     .then(()=> res.status(204).json({
       success: true,
@@ -102,9 +104,9 @@ const deleteSkill = (req, res) => {
 };
 
 module.exports = {
-    getSkills,
-    getSkill,
-    createSkill,
-    updateSkill,
-    deleteSkill
+    getRaces,
+    getRace,
+    createRace,
+    updateRace,
+    deleteRace
 }

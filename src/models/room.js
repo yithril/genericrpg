@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
-let NPC = require('./schemas/');
+let NPC = require('./schemas/npcSchema');
+let Item = require('./schemas/itemSchema')
 
 let roomSchema = mongoose.Schema({
     shortDesc: String,
@@ -14,14 +15,11 @@ let roomSchema = mongoose.Schema({
         enum: ['grassland', 'swamp', 'mountains', 'air', 'city', 'hills']
     },
     roomExits: [{
-        type: String
+        room: String,
+        direction: String
     }],
-    startingItems: [{
-        type: String
-    }],
-    startingNPCs: [{
-        type: String
-    }]
+    startingItems: [Item],
+    startingNPCs: [NPC]
 });
 
 module.exports = mongoose.model('Room', roomSchema);

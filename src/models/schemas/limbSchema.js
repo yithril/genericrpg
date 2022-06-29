@@ -1,7 +1,10 @@
 let mongoose = require('mongoose');
 
 let limbSchema = mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
     canWield: Boolean,
     isVital: Boolean
 });

@@ -41,11 +41,16 @@ const getQuest = (req, res) => {
 
 const createQuest = (req, res) => {
 
-   const Quest = new Quest({
-
+   const quest = new Quest({
+    _id: mongoose.Types.ObjectId(),
+    description: req.body.description,
+    title: req.body.title,
+    points: req.body.points,
+    minLevel: req.body.minLevel,
+    maxLevel: req.body.maxLevel
    });
 
-   return Quest
+   return quest
    .save()
    .then((newQuest) =>{
     return res.status(201).json({

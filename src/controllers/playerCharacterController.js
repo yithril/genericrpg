@@ -60,7 +60,7 @@ const getPlayerCharacter = (req, res) => {
 };
 
 const createPlayerCharacter = (req, res) => {
-    console.log(req.body);
+
    const pc = new Character({
     _id: mongoose.Types.ObjectId(),
     userId: req.body.userId,

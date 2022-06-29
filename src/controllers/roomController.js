@@ -1,33 +1,13 @@
 const mongoose = require('mongoose');
-const Character = require('../models/room');
+const Room = require('../models/room');
 
-const getPlayercharacterByUserId = (req, res) => {
-    const userId = req.params.id;
-
-    Character.findOne({userId: userId})
-        .then((pc) => {
-            return res.status(200).json({
-                success: true,
-                message: 'Found pc',
-                PC: pc
-            });
-        })
-        .catch((err) => {
-            res.status(500).json({
-                success: false,
-                message: 'Server error. Please try again.',
-                error: err.message,
-              });
-        });
-}
-
-const getPlayerCharacters = (req, res) => {
-    Character.find()
+const getRooms = (req, res) => {
+    Room.find()
     .then((allPC) => {
         return res.status(200).json({
             success: true,
-            message: 'A list of all pcs',
-            PC: allPC,
+            message: 'A list of all Rooms',
+            Room: allPC,
           });
     })
     .catch((err) => {
@@ -39,51 +19,50 @@ const getPlayerCharacters = (req, res) => {
       });
 };
 
-const getPlayerCharacter = (req, res) => {
+const getRoom = (req, res) => {
     const id = req.params.id;
 
-    Character.findById(id)
-    .then((singlePC) => {
+    Room.findById(id)
+    .then((singleRoom) => {
         res.status(200).json({
             success: true,
-            message: `Found pc`,
-            Cause: singlePC,
+            message: `Found skll`,
+            Room: singleRoom,
           });
     })
     .catch((err) => {
         res.status(500).json({
             success: false,
-            message: 'This pc does not exist',
+            message: 'This does not exist',
             error: err.message,
           });
     });
 };
 
-const createPlayerCharacter = (req, res) => {
-    console.log(req.body);
-   const pc = new Character({
+const createRoom = (req, res) => {
+
+   const room = new Room({
     _id: mongoose.Types.ObjectId(),
-    userId: req.body.userId,
-    name: req.body.name,
-    level: req.body.level,
-    strength: req.body.strength,
-    constitution: req.body.constitution,
-    dexterity: req.body.dexterity,
-    intelligence: req.body.intelligence,
-    perception: req.body.perception,
-    charisma: req.body.charisma,
-    xp: req.body.xp,
-    hp: req.body.hp,
-    mp: req.body.mp
+    shortDesc: req.body.shortDesc,
+    longDesc: req.body.longDesc,
+    zoneId: req.body.zoneId,
+    isOutdoor: req.body.isOutdoor,
+    xCoord: req.body.xCoord,
+    yCoord: req.body.yCoord,
+    zCoord: req.body.zCoord,
+    terrain: req.body.terrain,
+    roomExits: req.body.roomExits,
+    startingItems: req.body.startingItems,
+    startingNPCs: req.body.startingNPCs
    });
 
-   return pc
+   return room
    .save()
-   .then((newPC) =>{
+   .then((newRoom) =>{
     return res.status(201).json({
         success:true,
         message: 'Created successfully',
-        PC: newPC
+        Room: newRoom
     })
    })
    .catch((error) => {
@@ -95,17 +74,17 @@ const createPlayerCharacter = (req, res) => {
    });
 };
 
-const updatePlayerCharacter= (req, res) => {
+const updateRoom= (req, res) => {
     const id = req.params.id;
 
     const updateObject = req.body;
 
-    Character.update({_id:id}, {$set:updateObject})
+    Room.update({_id:id}, {$set:updateObject})
     .exec()
     .then(() => {
         res.status(200).json({
             success: true,
-            message: 'PC is updated',
+            message: 'Room is updated',
             updateCause: updateObject,
           });
     })
@@ -117,9 +96,9 @@ const updatePlayerCharacter= (req, res) => {
     });
 };
 
-const deletePlayerCharacter = (req, res) => {
+const deleteRoom = (req, res) => {
     const id = req.params.id;
-    Character.findByIdAndRemove(id)
+    Room.findByIdAndRemove(id)
     .exec()
     .then(()=> res.status(204).json({
       success: true,
@@ -130,10 +109,9 @@ const deletePlayerCharacter = (req, res) => {
 };
 
 module.exports = {
-    getPlayerCharacters,
-    getPlayerCharacter,
-    createPlayerCharacter,
-    updatePlayerCharacter,
-    deletePlayerCharacter,
-    getPlayercharacterByUserId
+    getRooms,
+    getRoom,
+    createRoom,
+    updateRoom,
+    deleteRoom
 }

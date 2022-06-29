@@ -1,8 +1,14 @@
 let mongoose = require('mongoose');
 
 let questSchema = mongoose.Schema({
-    description: String,
-    title: String,
+    description: {
+        type: String,
+        required: true
+    },
+    title: {
+        type: String,
+        required: true
+    },
     points: Number,
     minLevel: Number,
     maxLevel: Number

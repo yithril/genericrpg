@@ -1,16 +1,14 @@
 let mongoose = require('mongoose');
-let options = { discriminatorKey: 'item' };
+let itemSchema = require('./schemas/itemSchema');
+let weaponSchema = require('./schemas/weaponSchema');
+let armorSchema = require('./schemas/armorSchema');
 
-let itemSchema = mongoose.Schema({
-    descripton: String,
-    nounDescription: String,
-    cost: Number,
-    canTake: Boolean,
-    secretDescription: String,
-    hasSecret: Boolean,
-    canTake: Boolean
-},{
-    options
-});
+let Item = mongoose.model('Item', itemSchema);
+let Weapon = item.discriminator('Weapon', weaponSchema);
+let Armor = item.discriminator('Armor', armorSchema);
 
-module.exports = mongoose.model('Item', itemSchema);
+module.exports = {
+    Item,
+    Weapon,
+    Armor
+}

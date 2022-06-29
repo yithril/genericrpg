@@ -2,11 +2,20 @@ let mongoose = require('mongoose');
 let Limb = require('./limbSchema');
 
 let raceSchema = mongoose.Schema({
-    name: String,
+    name: {
+        type: String,
+        required: true
+    },
     isPlayable: Boolean,
     isPremium: Boolean,
-    description: String,
-    shortDescription: String,
+    description: {
+        type: String,
+        required: true
+    },
+    shortDescription: {
+        type: String,
+        required: true
+    },
     limbs: [Limb]
 });
 
