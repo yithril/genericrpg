@@ -12,7 +12,7 @@ const checkJwt = auth({
     createItem,
     updateItem,
     deleteItem,
-} = require('../controllers/ItemController');
+} = require('../controllers/itemController');
 
 router.route('/').get([checkJwt], getItems);
 

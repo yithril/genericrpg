@@ -12,7 +12,7 @@ const checkJwt = auth({
     createRace,
     updateRace,
     deleteRace,
-} = require('../controllers/RaceController');
+} = require('../controllers/raceController');
 
 router.route('/').get([checkJwt], getRaces);
 

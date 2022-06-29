@@ -12,7 +12,7 @@ const checkJwt = auth({
     createQuest,
     updateQuest,
     deleteQuest,
-} = require('../controllers/QuestController');
+} = require('../controllers/questController');
 
 router.route('/').get([checkJwt], getQuests);
 
