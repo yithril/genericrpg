@@ -1,5 +1,6 @@
 let options = { discriminatorKey: 'item' };
-let Limb = require('./schemas/limbSchema');
+let mongoose = require('mongoose');
+let Limb = require('./limbSchema');
 
 let armorSchema = mongoose.Schema({
     durability: Number,

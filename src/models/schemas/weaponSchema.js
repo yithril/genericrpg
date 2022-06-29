@@ -1,4 +1,5 @@
 let options = { discriminatorKey: 'item' };
+let mongoose = require('mongoose');
 
 let weaponSchema = mongoose.Schema({
     damageConstant: Number,
