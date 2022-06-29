@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Race = require('../models/Race');
+const Race = require('../models/race');
 
 const getRaces = (req, res) => {
     Race.find()
