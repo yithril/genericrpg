@@ -12,7 +12,7 @@ const checkJwt = auth({
     createRoom,
     updateRoom,
     deleteRoom,
-} = require('../controllers/RoomController');
+} = require('../controllers/roomController');
 
 router.route('/').get([checkJwt], getRooms);
 
