@@ -23,7 +23,7 @@ const corsOptions =  {
   origin: 'http://localhost:3000'
 };
 
-mongoose.connect('mongodb+srv://genericrpguser:GwhjBBgr5lkDjIKi@cluster0.fvyrw.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_URI)
 .then(() => {
   console.log('Database connected');
 })
@@ -46,5 +46,5 @@ app.use('/api/Quests', quest_routes);
 app.use('/api/Rooms', room_routes);
 app.use('/api/Items', item_routes);
 
-app.listen(3010);
-console.log('Listening on http://localhost:3010');
+app.listen(process.env.PORT || 80);
+console.log('Listening on ' + process.env.PORT || 80);
