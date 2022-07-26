@@ -15,5 +15,10 @@ namespace GenericRPGBlazor.Server.GameLogic.State
             _rooms = roomDTOs;
             _players = players;
         }
+
+        public List<RoomDTO> GetRooms()
+        {
+            return _rooms;
+        }
     }
 }

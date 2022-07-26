@@ -21,17 +21,26 @@ namespace GenericRPGBlazor.Server.GameLogic.Actions
 
         }
 
-        private bool RoomExitExists(string exit)
+        public RoomDTO GetCurrentRoom(GameState state, Living living)
+        {
+            var room = state.GetRooms().Where(x => x.PlayerList.Any(y => y.Id == living.Id)).FirstOrDefault();
+
+            ArgumentNullException.ThrowIfNull(room);
+
+            return room;
+        }
+
+        public bool RoomExitExists(string exit)
         {
             return true;
         }
 
-        private bool FlightCheck(Living living, RoomDTO roomDTO)
+        public bool FlightCheck(Living living, RoomDTO roomDTO)
         {
             return true;
         }
 
-        private bool FatigueCheck(Living living, RoomDTO roomDTO)
+        public bool FatigueCheck(Living living, RoomDTO roomDTO)
         {
             return true;
         }

@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32421.90
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericRPGBlazor.Server", "GenericRPGBlazor\Server\GenericRPGBlazor.Server.csproj", "{306630BB-0641-4469-B063-1F30A9335326}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRPGBlazor.Server", "GenericRPGBlazor\Server\GenericRPGBlazor.Server.csproj", "{306630BB-0641-4469-B063-1F30A9335326}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericRPGBlazor.Client", "GenericRPGBlazor\Client\GenericRPGBlazor.Client.csproj", "{D6E4C1F5-F34C-428A-AC38-9CC457CE990F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRPGBlazor.Client", "GenericRPGBlazor\Client\GenericRPGBlazor.Client.csproj", "{D6E4C1F5-F34C-428A-AC38-9CC457CE990F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericRPGBlazor.Shared", "GenericRPGBlazor\Shared\GenericRPGBlazor.Shared.csproj", "{7931A884-151E-4A15-A78B-FC6A8524DC6A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRPGBlazor.Shared", "GenericRPGBlazor\Shared\GenericRPGBlazor.Shared.csproj", "{7931A884-151E-4A15-A78B-FC6A8524DC6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericRPGBlazorTests", "GenericRPGBlazorTests\GenericRPGBlazorTests.csproj", "{245CE16C-3FA1-4C9A-BDED-487ABD03D74A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{7931A884-151E-4A15-A78B-FC6A8524DC6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7931A884-151E-4A15-A78B-FC6A8524DC6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7931A884-151E-4A15-A78B-FC6A8524DC6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{245CE16C-3FA1-4C9A-BDED-487ABD03D74A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245CE16C-3FA1-4C9A-BDED-487ABD03D74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245CE16C-3FA1-4C9A-BDED-487ABD03D74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245CE16C-3FA1-4C9A-BDED-487ABD03D74A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
