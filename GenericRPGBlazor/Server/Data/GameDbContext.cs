@@ -33,5 +33,6 @@ namespace GenericRPGBlazor.Server.Data
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Spell> Spells { get; set; }
         public DbSet<Weapon> Weapons { get; set; }
+        public DbSet<GameHelp> GameHelp { get; set; }
     }
 }

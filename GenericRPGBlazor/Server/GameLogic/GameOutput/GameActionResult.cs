@@ -1,14 +1,15 @@
-﻿namespace GenericRPGBlazor.Server.GameLogic.GameOutput
+﻿using GenericRPGBlazor.Shared.DTO;
+
+namespace GenericRPGBlazor.Server.GameLogic.GameOutput
 {
     public class GameActionResult
     {
-        public string Message { get; set; }
-        public bool Success { get; set; }
+        public string FirstPersonMessage { get; set; }
+        public string SecondPersonMessage { get; set; }       
 
-        public GameActionResult(string message, bool success = false)
-        {
-            Message = message;
-            Success = success;
-        }
+        public bool Success { get; set; }
+        public RoomDTO Room { get; set; }
+        public int PlayerId { get; set; }
+
     }
 }

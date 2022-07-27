@@ -16,11 +16,11 @@ namespace GenericRPGBlazor.Server.GameLogic.Parser
             _gameCommands.Add(new Drop());
         }
 
-        public GameActionResult ReceiveCommand(string command, GameState state, Living living, string text = "")
+        public GameActionResult ReceiveCommand(string command, int playerId, GameState state, Living living, string action, string predicate = "")
         {
             if (string.IsNullOrEmpty(command))
             {
-                return new GameActionResult("Please type a command.");
+                return new GameActionResult() {FirstPersonMessage = "Please type a command.", PlayerId = playerId };
             }
 
             //which command is needed?
@@ -29,12 +29,12 @@ namespace GenericRPGBlazor.Server.GameLogic.Parser
             //didn't find it
             if(commandToExecute == null)
             {
-                return new GameActionResult(ReturnRandomErrorMessage());
+                return new GameActionResult() { FirstPersonMessage = ReturnRandomErrorMessage(), PlayerId = playerId };
             }
 
-            commandToExecute.ExecuteCommand(state, living, text);
+            commandToExecute.ExecuteCommand(state, living, action, predicate);
 
-            return new GameActionResult("", success: true);
+            return new GameActionResult() { Success = true, PlayerId = playerId };
         }
 
         private string ReturnRandomErrorMessage()
@@ -44,7 +44,7 @@ namespace GenericRPGBlazor.Server.GameLogic.Parser
                 "Sorry, what?",
                 "Huh?",
                 "What?",
-                "Command not understood",
+                "Command not understood.",
                 "You want to do what?"
             };
 

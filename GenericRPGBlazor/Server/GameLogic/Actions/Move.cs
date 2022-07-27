@@ -1,4 +1,5 @@
-﻿using GenericRPGBlazor.Server.GameLogic.State;
+﻿using GenericRPGBlazor.Server.GameLogic.GameOutput;
+using GenericRPGBlazor.Server.GameLogic.State;
 using GenericRPGBlazor.Server.Models;
 using GenericRPGBlazor.Shared.DTO;
 
@@ -16,9 +17,9 @@ namespace GenericRPGBlazor.Server.GameLogic.Actions
             } 
         }
 
-        public override void ExecuteCommand(GameState state, Living living, string text)
+        public override GameActionResult ExecuteCommand(GameState state, Living living, string action, string predicate = "")
         {
-
+            throw new NotImplementedException();
         }
 
         public RoomDTO GetCurrentRoom(GameState state, Living living)

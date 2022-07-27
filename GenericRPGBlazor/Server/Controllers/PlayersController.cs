@@ -25,7 +25,7 @@ namespace GenericRPGBlazor.Server.Controllers
           {
               return NotFound();
           }
-            return await _context.Players.ToListAsync();
+            return await _context.Players.Where(x => x.AuthId == GetUserAuthId()).ToListAsync();
         }
 
         [HttpGet("{id}")]
@@ -55,6 +55,8 @@ namespace GenericRPGBlazor.Server.Controllers
 
             _context.Entry(player).State = EntityState.Modified;
 
+            player.ModifiedDate = DateTime.UtcNow;
+
             try
             {
                 await _context.SaveChangesAsync();
@@ -81,6 +83,10 @@ namespace GenericRPGBlazor.Server.Controllers
           {
               return Problem("Entity set 'GameDbContext.Players'  is null.");
           }
+
+            player.AuthId = GetUserAuthId();
+            player.CreatedDate = DateTime.UtcNow;
+
             _context.Players.Add(player);
             await _context.SaveChangesAsync();
 
