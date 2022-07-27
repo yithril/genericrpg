@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRPGBlazor.Client", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRPGBlazor.Shared", "GenericRPGBlazor\Shared\GenericRPGBlazor.Shared.csproj", "{7931A884-151E-4A15-A78B-FC6A8524DC6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenericRPGBlazorTests", "GenericRPGBlazorTests\GenericRPGBlazorTests.csproj", "{245CE16C-3FA1-4C9A-BDED-487ABD03D74A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericRPGBlazorTests", "GenericRPGBlazorTests\GenericRPGBlazorTests.csproj", "{245CE16C-3FA1-4C9A-BDED-487ABD03D74A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

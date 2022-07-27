@@ -5,6 +5,6 @@ namespace GenericRPGBlazor.Server.GameLogic.Hubs
 {
     public class GameHub : Hub
     {
-        private GameState _gameState;
+        
     }
 }
