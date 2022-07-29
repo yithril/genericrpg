@@ -37,6 +37,7 @@ builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 
 //Add services here, keeping them together makes it easier to se
 builder.Services.AddScoped<IRoomService, RoomService>();
+builder.Services.AddScoped<IPlayerService, PlayerService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

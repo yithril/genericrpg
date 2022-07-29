@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using GenericRPGBlazor.Server.Data;
-using GenericRPGBlazor.Server.Models;
 using Microsoft.AspNetCore.Authorization;
+using AutoWrapper.Wrappers;
+using GenericRPGBlazor.Server.Services.Interface;
+using GenericRPGBlazor.Shared.DTO;
 
 namespace GenericRPGBlazor.Server.Controllers
 {
@@ -11,110 +11,69 @@ namespace GenericRPGBlazor.Server.Controllers
     [Authorize]
     public class PlayersController : BaseController
     {
-        private readonly GameDbContext _context;
+        private readonly IPlayerService _playerService;
 
-        public PlayersController(GameDbContext context)
+        public PlayersController(IPlayerService service)
         {
-            _context = context;
+            _playerService = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Player>>> GetPlayers()
+        public async Task<ApiResponse> GetPlayers()
         {
-          if (_context.Players == null)
-          {
-              return NotFound();
-          }
-            return await _context.Players.Where(x => x.AuthId == GetUserAuthId()).ToListAsync();
+            return new ApiResponse(await _playerService.GetAllPlayers(GetUserAuthId()));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Player>> GetPlayer(int id)
+        public async Task<ApiResponse> GetPlayer(int id)
         {
-          if (_context.Players == null)
-          {
-              return NotFound();
-          }
-            var player = await _context.Players.FindAsync(id);
+            var player = await _playerService.GetPlayerById(id);
 
-            if (player == null)
+            if(player.Id == 0)
             {
-                return NotFound();
+                return new ApiResponse(404, "Player not found");
             }
 
-            return player;
+            return new ApiResponse(player);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPlayer(int id, Player player)
+        public async Task<ApiResponse> PutPlayer(int id, PlayerDTO playerDTO)
         {
-            if (id != player.Id)
+            var updateSuccess = await _playerService.UpdatePlayer(id, playerDTO);
+
+            if (!updateSuccess)
             {
-                return BadRequest();
+                return new ApiResponse(500, "update failed");
             }
 
-            _context.Entry(player).State = EntityState.Modified;
-
-            player.ModifiedDate = DateTime.UtcNow;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PlayerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return new ApiResponse();
         }
 
         [HttpPost]
-        public async Task<ActionResult<Player>> PostPlayer(Player player)
+        public async Task<ApiResponse> PostPlayer(PlayerDTO playerDTO)
         {
-          if (_context.Players == null)
-          {
-              return Problem("Entity set 'GameDbContext.Players'  is null.");
-          }
+            var player = await _playerService.CreatePlayer(playerDTO, GetUserAuthId());
 
-            player.AuthId = GetUserAuthId();
-            player.CreatedDate = DateTime.UtcNow;
+            if(player.Id == 0)
+            {
+                return new ApiResponse(500, "player not created");
+            }
 
-            _context.Players.Add(player);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetPlayer", new { id = player.Id }, player);
+            return new ApiResponse(playerDTO);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePlayer(int id)
+        public async Task<ApiResponse> DeletePlayer(int id)
         {
-            if (_context.Players == null)
+            var delete = await _playerService.DeletePlayer(id);
+
+            if (!delete)
             {
-                return NotFound();
-            }
-            var player = await _context.Players.FindAsync(id);
-            if (player == null)
-            {
-                return NotFound();
+                return new ApiResponse(500, "delete failed");
             }
 
-            _context.Players.Remove(player);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool PlayerExists(int id)
-        {
-            return (_context.Players?.Any(e => e.Id == id)).GetValueOrDefault();
+            return new ApiResponse();
         }
     }
 }
