@@ -24,6 +24,7 @@ namespace GenericRPGBlazor.Server.Services
                 .Include(y => y.Race)
                 .Include(y => y.Skills)
                 .Include(y => y.Quests)
+                .Where(x => x.IsActive)
                 .ToListAsync();
 
             var dto = _mapper.Map<List<PlayerDTO>>(players);
