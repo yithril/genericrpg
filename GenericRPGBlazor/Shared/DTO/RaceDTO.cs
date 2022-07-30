@@ -4,6 +4,8 @@ namespace GenericRPGBlazor.Shared.DTO
 {
     public class RaceDTO
     {
+        public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 

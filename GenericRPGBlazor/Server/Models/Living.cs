@@ -14,5 +14,8 @@
         public Race Race { get; set; }
         public int Level { get; set; }
         public int Stamina { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Honorific { get; set; }
     }
 }

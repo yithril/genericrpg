@@ -1,5 +1,8 @@
 ﻿@page "/listPlayers"
-
+@using GenericRPGBlazor.Client.Services.Interface;
+@using GenericRPGBlazor.Shared.DTO
+@inject IPlayerClientService userService
+@attribute [Authorize]
 
 <MudGrid>
    <MudItem xs="3">
@@ -7,12 +10,47 @@
    </MudItem>
    <MudItem xs="6">
        <MudPaper>
-
+           <MudButton Variant="Variant.Filled" Color="Color.Primary">Create New Character</MudButton>
+           @if(players.Count > 0)
+            {
+                <MudTable Items="@players" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">
+                <HeaderContent>
+                    <MudTh>Name</MudTh>
+                    <MudTh>Race</MudTh>
+                    <MudTh>Level</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Name">@context.FirstName @context.LastName</MudTd>
+                    <MudTd DataLabel="Race">@context.Race.Name</MudTd>
+                    <MudTd DataLabel="Level">@context.Level</MudTd>
+                </RowTemplate>
+            </MudTable>
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Info">You don't have any characters! Create a new character to play the game.</MudAlert>
+            }
        </MudPaper>
    </MudItem>
    <MudItem xs="3"></MudItem>
 </MudGrid>
 
-@code {
 
+
+
+@code {
+    public List<PlayerDTO> players { get; set; } = new List<PlayerDTO>();
+    private bool _loading;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetPlayers();
+    }
+
+    public async Task GetPlayers()
+    {
+         _loading = true;
+        players = await userService.GetAllPlayers(); 
+         _loading = false;
+    }
 }

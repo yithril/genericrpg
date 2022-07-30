@@ -70,7 +70,7 @@ namespace GenericRPGBlazor.Server.Services
 
             try
             {
-                _context.Players.Remove(player);
+                player.IsActive = false;
                 await _context.SaveChangesAsync();
 
                 return true;

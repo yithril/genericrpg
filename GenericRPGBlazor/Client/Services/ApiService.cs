@@ -1,5 +1,6 @@
 ﻿using GenericRPGBlazor.Client.Services.Interface;
 using System.Net.Http.Json;
+using AutoWrapper.Server;
 
 namespace GenericRPGBlazor.Client.Services
 {
@@ -14,28 +15,51 @@ namespace GenericRPGBlazor.Client.Services
 
         public async Task<T> Get<T>(string endpoint)
         {
-            return await _httpClient.GetFromJsonAsync<T>(endpoint);
+            var response = await _httpClient.GetAsync(endpoint);
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+
+            var returnObj = Unwrapper.Unwrap<T>(jsonString);
+
+            return returnObj;
         }
 
         public async Task<T> Post<T>(string endpoint, object data)
         {
-            var response = await _httpClient.PostAsJsonAsync(endpoint, data);
+            JsonContent content = JsonContent.Create(data);
 
-            return await response.Content.ReadFromJsonAsync<T>();
+            var response = await _httpClient.PostAsync(endpoint, content);
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+
+            var returnObj = Unwrapper.Unwrap<T>(jsonString);
+
+            return returnObj;
         }
 
         public async Task<T> Put<T>(string endpoint, object data)
         {
-            var response = await _httpClient.PutAsJsonAsync(endpoint, data);
+            JsonContent content = JsonContent.Create(data);
 
-            return await response.Content.ReadFromJsonAsync<T>();
+            var response = await _httpClient.PutAsync(endpoint, content);
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+
+            var returnObj = Unwrapper.Unwrap<T>(jsonString);
+
+            return returnObj;
         }
 
         public async Task<T> Delete<T>(string endpoint)
         {
+
             var response = await _httpClient.DeleteAsync(endpoint);
 
-            return await response.Content.ReadFromJsonAsync<T>();
+            var jsonString = await response.Content.ReadAsStringAsync();
+
+            var returnObj = Unwrapper.Unwrap<T>(jsonString);
+
+            return returnObj;
         }
     }
 }
