@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GenericRPGBlazor.Shared.DTO
+﻿namespace GenericRPGBlazor.Shared.DTO
 {
     public class RoomItemDTO
     {
+        public int RoomId { get; set; }
+        public int ItemId { get; set; }
+        public ItemDTO Item { get; set; }
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GenericRPGBlazor.Shared.DTO
+﻿namespace GenericRPGBlazor.Shared.DTO
 {
     public class ArmorLimbDTO
     {
+        public int LimbId { get; set; }
+        public int ArmorId { get; set; }
     }
 }

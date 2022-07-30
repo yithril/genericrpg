@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GenericRPGBlazor.Shared.DTO
+﻿namespace GenericRPGBlazor.Shared.DTO
 {
     public class GameHelpDTO
     {
+        public string Topic { get; set; }
+        public string HelpText { get; set; }
+        public string ExampleText { get; set; }
     }
 }

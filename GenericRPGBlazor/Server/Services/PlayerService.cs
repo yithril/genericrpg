@@ -103,5 +103,16 @@ namespace GenericRPGBlazor.Server.Services
 
             return playerDTO;
         }
+
+        private async Task OnboardPlayer(PlayerDTO dto)
+        {
+            //setup the player hp
+
+            //setup the player mana
+
+            //setup their skills
+
+            //save
+        }
     }
 }
