@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GenericRPGBlazor.Server.Migrations
 {
     [DbContext(typeof(GameDbContext))]
-    [Migration("20220726031201_initialMigration")]
-    partial class initialMigration
+    [Migration("20220730185557_setupOnNewDB")]
+    partial class setupOnNewDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -157,6 +157,40 @@ namespace GenericRPGBlazor.Server.Migrations
                     b.HasIndex("SkillId");
 
                     b.ToTable("CraftSkills");
+                });
+
+            modelBuilder.Entity("GenericRPGBlazor.Server.Models.GameHelp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExampleText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HelpText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GameHelp");
                 });
 
             modelBuilder.Entity("GenericRPGBlazor.Server.Models.GameZone", b =>
@@ -311,6 +345,14 @@ namespace GenericRPGBlazor.Server.Migrations
                     b.Property<int>("Dexterity")
                         .HasColumnType("int");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Honorific")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Hp")
                         .HasColumnType("int");
 
@@ -328,6 +370,10 @@ namespace GenericRPGBlazor.Server.Migrations
 
                     b.Property<bool>("IsShopKeep")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");
@@ -368,6 +414,10 @@ namespace GenericRPGBlazor.Server.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AuthId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Charisma")
                         .HasColumnType("int");
 
@@ -383,6 +433,14 @@ namespace GenericRPGBlazor.Server.Migrations
                     b.Property<int>("Dexterity")
                         .HasColumnType("int");
 
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Honorific")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Hp")
                         .HasColumnType("int");
 
@@ -391,6 +449,10 @@ namespace GenericRPGBlazor.Server.Migrations
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Level")
                         .HasColumnType("int");

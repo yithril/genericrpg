@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GenericRPGBlazor.Server.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class setupOnNewDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,6 +25,24 @@ namespace GenericRPGBlazor.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CraftRecipes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GameHelp",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HelpText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ExampleText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GameHelp", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -322,7 +340,10 @@ namespace GenericRPGBlazor.Server.Migrations
                     Perception = table.Column<int>(type: "int", nullable: false),
                     RaceId = table.Column<int>(type: "int", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
-                    Stamina = table.Column<int>(type: "int", nullable: false)
+                    Stamina = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Honorific = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -343,6 +364,7 @@ namespace GenericRPGBlazor.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Xp = table.Column<int>(type: "int", nullable: false),
                     CurrentRoomId = table.Column<int>(type: "int", nullable: false),
+                    AuthId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
@@ -356,7 +378,10 @@ namespace GenericRPGBlazor.Server.Migrations
                     Perception = table.Column<int>(type: "int", nullable: false),
                     RaceId = table.Column<int>(type: "int", nullable: false),
                     Level = table.Column<int>(type: "int", nullable: false),
-                    Stamina = table.Column<int>(type: "int", nullable: false)
+                    Stamina = table.Column<int>(type: "int", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Honorific = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -705,6 +730,9 @@ namespace GenericRPGBlazor.Server.Migrations
 
             migrationBuilder.DropTable(
                 name: "CraftSkills");
+
+            migrationBuilder.DropTable(
+                name: "GameHelp");
 
             migrationBuilder.DropTable(
                 name: "LimbRace");

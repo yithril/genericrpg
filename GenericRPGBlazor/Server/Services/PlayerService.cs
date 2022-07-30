@@ -20,7 +20,11 @@ namespace GenericRPGBlazor.Server.Services
 
         public async Task<List<PlayerDTO>> GetAllPlayers(string authId)
         {
-            var players = await _context.Players.Where(x => x.AuthId == authId).ToListAsync();
+            var players = await _context.Players.Where(x => x.AuthId == authId)
+                .Include(y => y.Race)
+                .Include(y => y.Skills)
+                .Include(y => y.Quests)
+                .ToListAsync();
 
             var dto = _mapper.Map<List<PlayerDTO>>(players);
 
@@ -29,7 +33,11 @@ namespace GenericRPGBlazor.Server.Services
 
         public async Task<PlayerDTO> GetPlayerById(int id)
         {
-            var player = await _context.Players.SingleOrDefaultAsync(x => x.Id == id);
+            var player = await _context.Players
+                .Include(y => y.Race)
+                .Include(y => y.Skills)
+                .Include(y => y.Quests)
+                .SingleOrDefaultAsync(x => x.Id == id);
 
             if(player == null)
             {

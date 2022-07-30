@@ -1,0 +1,16 @@
+﻿using GenericRPGBlazor.Server.Services.Interface;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+namespace GenericRPGBlazor.Server.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CraftSkillsController : BaseController
+    {
+        private ICraftSkillService _service; 
+        public CraftSkillsController(ICraftSkillService service)
+        {
+            _service = service;
+        }
+     }
+}
