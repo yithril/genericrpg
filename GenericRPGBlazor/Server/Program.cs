@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,34 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddSwaggerGen(option =>
+{
+    option.SwaggerDoc("v1", new OpenApiInfo { Title = "Demo API", Version = "v1" });
+    option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("read:admin", policy => policy.Requirements.Add(new HasScopeRequirement("read:admin", builder.Configuration["Auth0:Authority"])));
@@ -39,6 +68,23 @@ builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IPlayerService, PlayerService>();
 builder.Services.AddScoped<IRaceService, RaceService>();
+builder.Services.AddScoped<IArmorService, ArmorService>();
+builder.Services.AddScoped<ICraftReagentService, CraftReagentService>();
+builder.Services.AddScoped<ICraftRecipeService, CraftRecipeService>();
+builder.Services.AddScoped<ICraftSkillService, CraftSkillService>();
+builder.Services.AddScoped<IGameHelpService, GameHelpService>();
+builder.Services.AddScoped<IGameZoneService, GameZoneService>();
+builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<ILimbService, LimbService>();
+builder.Services.AddScoped<INPCService, NPCService>();
+builder.Services.AddScoped<IPlayerQuestService, PlayerQuestService>();
+builder.Services.AddScoped<IQuestService, QuestService>();
+builder.Services.AddScoped<IRaceSkillService, RaceSkillService>();
+builder.Services.AddScoped<IRoomExitService, RoomExitService>();
+builder.Services.AddScoped<IRoomItemService, RoomItemService>();
+builder.Services.AddScoped<IRoomNPCService, RoomNPCService>();
+builder.Services.AddScoped<ISkillService, SkillService>();
+builder.Services.AddScoped<IWeaponService, WeaponService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -53,6 +99,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blazor API V1");
+    });
 }
 else
 {

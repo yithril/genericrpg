@@ -2,7 +2,7 @@
 
 namespace GenericRPGBlazor.Server.Services
 {
-    public class RaceSkill : IRaceSkillService
+    public class RaceSkillService : IRaceSkillService
     {
     }
 }
