@@ -92,27 +92,61 @@ namespace GenericRPGBlazor.Server.Services
 
         public async Task<PlayerDTO> CreatePlayer(PlayerDTO playerDTO, string authId)
         {
-            var player = _mapper.Map<Player>(playerDTO);
-
-            player.AuthId = authId;
-            player.CreatedDate = DateTime.UtcNow;
-            player.Xp = 0;
-
-            _context.Players.Add(player);
-            await _context.SaveChangesAsync();
+            await OnboardPlayer(playerDTO, authId);
 
             return playerDTO;
         }
 
-        private async Task OnboardPlayer(PlayerDTO dto)
+        private async Task OnboardPlayer(PlayerDTO dto, string authId)
         {
+            var player = _mapper.Map<Player>(dto);
+
+            player.CreatedDate = DateTime.UtcNow;
+            player.AuthId = authId;
+
+            var race = await _context.Races.FindAsync(dto.RaceId);
+
+            var playerSkillList = new List<PlayerSkill>();
+
             //setup the player hp
+            player.Hp = (int)(race.HPModifier * dto.Constitution * 1.5);
+
+            var endurance = dto.Skills.FirstOrDefault(x => x.SkillName == "Endurance");
+            var esoteria = dto.Skills.FirstOrDefault(x => x.SkillName == "Esoteria");
+
+            if (endurance != null && endurance.CurrentLevel > 0)
+            {
+                player.Hp += (int)(endurance.CurrentLevel * .15);
+            }
 
             //setup the player mana
+            player.Mana = (int)(race.MPModifier * dto.Intelligence * 2);
+
+            if (esoteria !=null && esoteria.CurrentLevel > 0)
+            {
+                player.Mana += (int)(esoteria.CurrentLevel * .15);
+            }
+
+            //save the player
+            _context.Players.Add(player);
+            await _context.SaveChangesAsync();
 
             //setup their skills
+            foreach (var s in dto.Skills)
+            {
+                var p = new PlayerSkill()
+                {
+                    PlayerId = player.Id,
+                    CreatedDate = DateTime.UtcNow,
+                    IsActive = true,
+                    SkillId = s.SkillId
+                };
+
+                _context.PlayerSkills.Add(p);
+            }
 
             //save
+            await _context.SaveChangesAsync();
         }
     }
 }

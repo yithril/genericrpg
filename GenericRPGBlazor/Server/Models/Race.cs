@@ -29,6 +29,8 @@ namespace GenericRPGBlazor.Server.Models
         public int StrMin { get; set; }
         public int PerMin { get; set; }
         public int ChaMin { get; set; }
+        public double HPModifier { get; set; }
+        public double MPModifier { get; set; }
         public List<Limb> Limbs { get; set; }
         public List<RaceSkill> RaceSkills { get; set; }
     }
