@@ -31,5 +31,7 @@ namespace GenericRPGBlazor.Shared.DTO
         public int StrMin { get; set; }
         public int PerMin { get; set; }
         public int ChaMin { get; set; }
+        public double HPModifier { get; set; }
+        public double MPModifier { get; set; }
     }
 }
