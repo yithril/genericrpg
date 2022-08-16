@@ -9,5 +9,6 @@ namespace GenericRPGBlazor.Server.Services.Interface
         Task<bool> DeletePlayer(int id);
         Task<PlayerDTO> CreatePlayer(PlayerDTO playerDTO, string authId);
         Task<bool> UpdatePlayer(int id, PlayerDTO update);
+        Task<bool> ValidatePlayerStart(int id, string authId);
     }
 }

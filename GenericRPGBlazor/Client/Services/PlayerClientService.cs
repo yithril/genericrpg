@@ -14,35 +14,35 @@ namespace GenericRPGBlazor.Client.Services
 
         public async Task<List<PlayerDTO>> GetAllPlayers()
         {
-            var endpoint = "api/Player";
+            var endpoint = "api/Players";
 
             return await _apiService.Get<List<PlayerDTO>>(endpoint);
         }
 
         public async Task<PlayerDTO> GetPlayerById(string id)
         {
-            var endpoint = "api/Player/" + id;
+            var endpoint = "api/Players/" + id;
 
             return await _apiService.Get<PlayerDTO>(endpoint);
         }
 
         public async Task<PlayerDTO> PostPlayer(PlayerDTO player)
         {
-            var endpoint = "api/Player";
+            var endpoint = "api/Players";
 
             return await _apiService.Post<PlayerDTO>(endpoint, player);
         }
 
         public async Task<PlayerDTO> UpdatePlayer(PlayerDTO player)
         {
-            var endpoint = "api/Player";
+            var endpoint = "api/Players";
 
             return await _apiService.Put<PlayerDTO>(endpoint, player);
         }
 
         public async Task<bool> DeletePlayer(string id)
         {
-            var endpoint = "api/Player/" + id;
+            var endpoint = "api/Players/" + id;
 
             return await _apiService.Delete<bool>(endpoint);
         }

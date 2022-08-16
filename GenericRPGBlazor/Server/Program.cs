@@ -1,4 +1,7 @@
 using GenericRPGBlazor.Server.Data;
+using GenericRPGBlazor.Server.GameLogic.Hubs;
+using GenericRPGBlazor.Server.GameLogic.Parser;
+using GenericRPGBlazor.Server.GameLogic.Parser.Interface;
 using GenericRPGBlazor.Server.Middleware;
 using GenericRPGBlazor.Server.Services;
 using GenericRPGBlazor.Server.Services.Interface;
@@ -85,10 +88,14 @@ builder.Services.AddScoped<IRoomItemService, RoomItemService>();
 builder.Services.AddScoped<IRoomNPCService, RoomNPCService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IWeaponService, WeaponService>();
+builder.Services.AddScoped<IUserActivityService, UserActivityService>();
+builder.Services.AddScoped<ICommandRouter, CommandRouter>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddSignalR();
+
+builder.Services.AddMemoryCache();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -112,14 +119,17 @@ else
     app.UseHsts();
 }
 
+app.MapBlazorHub();
+app.MapHub<GameHub>("/gameHub");
+
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseAuthentication();
-
 app.UseRouting();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();

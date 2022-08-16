@@ -13,6 +13,5 @@ namespace GenericRPGBlazor.Shared.DTO
         public List<ItemDTO> Items { get; set; } = new List<ItemDTO>();
         public List<NPCDTO> NPCs { get; set; } = new List<NPCDTO>();
         public List<PlayerDTO> PlayerList { get; set; } = new List<PlayerDTO>();
-
     }
 }

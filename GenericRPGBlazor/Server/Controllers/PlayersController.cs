@@ -21,7 +21,9 @@ namespace GenericRPGBlazor.Server.Controllers
         [HttpGet]
         public async Task<ApiResponse> GetPlayers()
         {
-            return new ApiResponse(await _playerService.GetAllPlayers(GetUserAuthId()));
+            var players = await _playerService.GetAllPlayers(GetUserAuthId());
+
+            return new ApiResponse(players);
         }
 
         [HttpGet("{id}")]

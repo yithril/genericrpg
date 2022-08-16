@@ -18,16 +18,31 @@ namespace GenericRPGBlazor.Server.Services
             _mapper = mapper;
         }
 
+        public async Task<bool> ValidatePlayerStart(int id, string authId)
+        {
+            //when someone connects, need to make sure that the person connecting is authoried to play this char
+            return await _context.Players.AnyAsync(x => x.Id == id && x.AuthId == authId);
+        }
+
         public async Task<List<PlayerDTO>> GetAllPlayers(string authId)
         {
-            var players = await _context.Players.Where(x => x.AuthId == authId)
-                .Include(y => y.Race)
-                .Include(y => y.Skills)
-                .Include(y => y.Quests)
-                .Where(x => x.IsActive)
-                .ToListAsync();
+            var dto = new List<PlayerDTO>();
 
-            var dto = _mapper.Map<List<PlayerDTO>>(players);
+            try
+            {
+                var players = await _context.Players.Where(x => x.AuthId == authId)
+                    .Include(y => y.Race)
+                    .Include(y => y.Skills)
+                    .Include(y => y.Quests)
+                    .Where(x => x.IsActive)
+                    .ToListAsync();
+
+                dto = _mapper.Map<List<PlayerDTO>>(players);
+            }
+            catch (Exception ex)
+            {
+                var blah = 5;
+            }
 
             return dto;
         }
@@ -105,6 +120,11 @@ namespace GenericRPGBlazor.Server.Services
             player.AuthId = authId;
 
             var race = await _context.Races.FindAsync(dto.RaceId);
+
+            if(race == null)
+            {
+                return;
+            }
 
             var playerSkillList = new List<PlayerSkill>();
 

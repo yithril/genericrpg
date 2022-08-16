@@ -1,11 +1,12 @@
 ﻿using GenericRPGBlazor.Server.GameLogic.Actions;
 using GenericRPGBlazor.Server.GameLogic.GameOutput;
+using GenericRPGBlazor.Server.GameLogic.Parser.Interface;
 using GenericRPGBlazor.Server.GameLogic.State;
 using GenericRPGBlazor.Server.Models;
 
 namespace GenericRPGBlazor.Server.GameLogic.Parser
 {
-    public class CommandRouter
+    public class CommandRouter : ICommandRouter
     {
         private List<GameAction> _gameCommands = new List<GameAction>();
 
