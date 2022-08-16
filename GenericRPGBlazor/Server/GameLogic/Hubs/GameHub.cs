@@ -8,15 +8,17 @@ namespace GenericRPGBlazor.Server.GameLogic.Hubs
 {
     public class GameHub : Hub
     {
-        private ICommandRouter _commandrouter;
-        private IPlayerService _playerService;
+        private readonly ICommandRouter _commandrouter;
+        private readonly IPlayerService _playerService;
         private readonly IMemoryCache _memoryCache;
+        private readonly IUserActivityService _userActivityService;
 
-        public GameHub(ICommandRouter commandRouter, IPlayerService playerService, IMemoryCache memoryCache)
+        public GameHub(ICommandRouter commandRouter, IPlayerService playerService, IMemoryCache memoryCache, IUserActivityService userActivityService)
         {
             _commandrouter = commandRouter; 
             _playerService = playerService;
             _memoryCache = memoryCache;
+            _userActivityService = userActivityService; 
         }
 
         public override async Task OnConnectedAsync()
@@ -44,6 +46,13 @@ namespace GenericRPGBlazor.Server.GameLogic.Hubs
 
             CachePlayer(int.Parse(playerId), GetUserAuthId(context.User));
 
+            await _userActivityService.PostActivity(new Models.UserActivity()
+            {
+                AuthId = GetUserAuthId(context.User),
+                PlayerId = int.Parse(playerId),
+                ActivityType = Shared.Enum.ActivityType.Login
+            });
+
             await base.OnConnectedAsync();
         }
 
@@ -64,6 +73,13 @@ namespace GenericRPGBlazor.Server.GameLogic.Hubs
         private async void CachePlayer(int id, string authId)
         {
             var player = await _playerService.GetPlayerById(id);
+
+            await _userActivityService.PostActivity(new Models.UserActivity()
+            {
+                AuthId = authId,
+                PlayerId = player.Id,
+                ActivityType = Shared.Enum.ActivityType.Logout
+            });
 
             _memoryCache.Set(authId, player, TimeSpan.FromHours(1));
         }

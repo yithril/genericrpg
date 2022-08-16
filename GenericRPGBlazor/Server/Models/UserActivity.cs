@@ -6,5 +6,6 @@ namespace GenericRPGBlazor.Server.Models
     {
         public string AuthId { get; set; }
         public ActivityType ActivityType { get; set; }
+        public int PlayerId { get; set; }
     }
 }

@@ -121,6 +121,11 @@ namespace GenericRPGBlazor.Server.Services
 
             var race = await _context.Races.FindAsync(dto.RaceId);
 
+            if(race == null)
+            {
+                return;
+            }
+
             var playerSkillList = new List<PlayerSkill>();
 
             //setup the player hp

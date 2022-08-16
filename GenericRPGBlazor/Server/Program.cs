@@ -88,6 +88,7 @@ builder.Services.AddScoped<IRoomItemService, RoomItemService>();
 builder.Services.AddScoped<IRoomNPCService, RoomNPCService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IWeaponService, WeaponService>();
+builder.Services.AddScoped<IUserActivityService, UserActivityService>();
 builder.Services.AddScoped<ICommandRouter, CommandRouter>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
