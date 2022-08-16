@@ -18,6 +18,12 @@ namespace GenericRPGBlazor.Server.Services
             _mapper = mapper;
         }
 
+        public async Task<bool> ValidatePlayerStart(int id, string authId)
+        {
+            //when someone connects, need to make sure that the person connecting is authoried to play this char
+            return await _context.Players.AnyAsync(x => x.Id == id && x.AuthId == authId);
+        }
+
         public async Task<List<PlayerDTO>> GetAllPlayers(string authId)
         {
             var dto = new List<PlayerDTO>();
