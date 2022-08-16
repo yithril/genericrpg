@@ -10,7 +10,7 @@
    </MudItem>
    <MudItem xs="6">
        <MudPaper>
-           <MudButton Variant="Variant.Filled" Color="Color.Primary">Create New Character</MudButton>
+           <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mb-3" Href="/createCharacter">Create New Character</MudButton>
            @if(players.Count > 0)
             {
                 <MudTable Items="@players" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@_loading" LoadingProgressColor="Color.Info">

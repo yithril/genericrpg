@@ -6,18 +6,22 @@ namespace GenericRPGBlazor.Client.Services
 {
     public class ApiService : IApiService
     {
-        private HttpClient _httpClient;
+        private IHttpClientFactory _httpClientFactory;
 
-        public ApiService(HttpClient httpClient)
+        public ApiService(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
+            _httpClientFactory = httpClientFactory;
         }
 
         public async Task<T> Get<T>(string endpoint)
         {
-            var response = await _httpClient.GetAsync(endpoint);
+            var httpClient = _httpClientFactory.CreateClient("GameAPI");
+
+            var response = await httpClient.GetAsync(endpoint);
 
             var jsonString = await response.Content.ReadAsStringAsync();
+
+            Console.WriteLine(jsonString);
 
             var returnObj = Unwrapper.Unwrap<T>(jsonString);
 
@@ -26,9 +30,11 @@ namespace GenericRPGBlazor.Client.Services
 
         public async Task<T> Post<T>(string endpoint, object data)
         {
+            var httpClient = _httpClientFactory.CreateClient("GameAPI");
+
             JsonContent content = JsonContent.Create(data);
 
-            var response = await _httpClient.PostAsync(endpoint, content);
+            var response = await httpClient.PostAsync(endpoint, content);
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
@@ -39,9 +45,11 @@ namespace GenericRPGBlazor.Client.Services
 
         public async Task<T> Put<T>(string endpoint, object data)
         {
+            var httpClient = _httpClientFactory.CreateClient("GameAPI");
+
             JsonContent content = JsonContent.Create(data);
 
-            var response = await _httpClient.PutAsync(endpoint, content);
+            var response = await httpClient.PutAsync(endpoint, content);
 
             var jsonString = await response.Content.ReadAsStringAsync();
 
@@ -52,8 +60,9 @@ namespace GenericRPGBlazor.Client.Services
 
         public async Task<T> Delete<T>(string endpoint)
         {
+            var httpClient = _httpClientFactory.CreateClient("GameAPI");
 
-            var response = await _httpClient.DeleteAsync(endpoint);
+            var response = await httpClient.DeleteAsync(endpoint);
 
             var jsonString = await response.Content.ReadAsStringAsync();
 

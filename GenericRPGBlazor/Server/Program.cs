@@ -1,4 +1,6 @@
 using GenericRPGBlazor.Server.Data;
+using GenericRPGBlazor.Server.GameLogic.Parser;
+using GenericRPGBlazor.Server.GameLogic.Parser.Interface;
 using GenericRPGBlazor.Server.Middleware;
 using GenericRPGBlazor.Server.Services;
 using GenericRPGBlazor.Server.Services.Interface;
@@ -85,6 +87,7 @@ builder.Services.AddScoped<IRoomItemService, RoomItemService>();
 builder.Services.AddScoped<IRoomNPCService, RoomNPCService>();
 builder.Services.AddScoped<ISkillService, SkillService>();
 builder.Services.AddScoped<IWeaponService, WeaponService>();
+builder.Services.AddScoped<ICommandRouter, CommandRouter>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -118,8 +121,8 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseAuthentication();
-
 app.UseRouting();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();
